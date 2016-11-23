@@ -52,11 +52,15 @@ fn main() {
   env_logger::init().unwrap();
 
   // Init Lua
-  let input = File::open(std::env::args().nth(1).expect("An input file is required")).unwrap();
+  let input_file = std::env::args().nth(1).expect("An input file is required");
+  let input = File::open(input_file).unwrap();
   let mut generator = generator::Generator::ready(input).unwrap();
 
   // Generate Image
-  let mut f = File::create(generator.get_string("output").unwrap_or(String::from("output.png")))
-    .unwrap();
-  construct_image(&mut generator).unwrap().save(&mut f, image::ImageFormat::PNG).unwrap();
+  let image = construct_image(&mut generator).unwrap();
+
+  let output_file = generator.get_string("output")
+    .unwrap_or(String::from("output.png"));
+  let mut f = File::create(output_file).unwrap();
+  image.save(&mut f, image::ImageFormat::PNG).unwrap();
 }

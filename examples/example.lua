@@ -23,15 +23,15 @@ height = 1024;
 --output = "output.png";
 
 function red()
-  return bit32.band(x, x);
+  return x;
 end
 
 function blue()
-  return 0;
+  return y;
 end
 
 function green()
-  return "n";
+  return x + y;
 end
 
 function alpha()
